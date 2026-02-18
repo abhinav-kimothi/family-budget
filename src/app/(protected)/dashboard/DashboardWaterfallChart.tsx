@@ -71,17 +71,20 @@ export function DashboardWaterfallChart({
   const baseBarFill = "var(--background)";
 
   const formatTooltip = (
-    value: number,
-    dataKey: string,
-    props: { payload: { name: string } },
+    value: number | undefined,
+    dataKey: string | number | undefined,
+    props: { payload?: { name?: string } } | undefined,
   ) => {
     if (dataKey === "base") return null;
-    const label = props?.payload?.name ?? dataKey;
+    const label = props?.payload?.name ?? String(dataKey);
+    const safeValue = value ?? 0;
     if (label === "Start" || label === "End") {
-      return [formatCur(value, currency), label];
+      return [formatCur(safeValue, currency), label];
     }
     return [
-      value >= 0 ? `+${formatCur(value, currency)}` : formatCur(value, currency),
+      safeValue >= 0
+        ? `+${formatCur(safeValue, currency)}`
+        : formatCur(safeValue, currency),
       label,
     ];
   };
@@ -112,9 +115,9 @@ export function DashboardWaterfallChart({
             />
             <Tooltip
               formatter={(
-                value: number,
-                dataKey: string,
-                props: { payload: { name: string } },
+                value: number | undefined,
+                dataKey: string | number | undefined,
+                props: { payload?: { name?: string } } | undefined,
               ) => formatTooltip(value, dataKey, props)}
               wrapperStyle={{
                 outline: "none",

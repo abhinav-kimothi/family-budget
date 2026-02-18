@@ -42,8 +42,8 @@ function pctChange(current: number, previous: number | null): string | null {
 
 function CustomTooltip(props: {
   active?: boolean;
-  payload?: Array<{ payload: TrendPoint }>;
-  label?: string;
+  payload?: ReadonlyArray<{ payload: TrendPoint }>;
+  label?: string | number;
   currency: string;
 }) {
   const { active, payload, label, currency } = props;

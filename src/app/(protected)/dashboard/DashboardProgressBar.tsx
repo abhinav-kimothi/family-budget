@@ -93,7 +93,7 @@ export function DashboardProgressBar({
         <span>Plan: {formatValue(plan)}</span>
         {(plan !== 0 || isNet) && (
           <span style={{ color: isOverBudget ? WARNING : SUCCESS }}>
-            {(isIncome || type === "investment") && actual >= plan && "+"}
+            {isIncome && actual >= plan && "+"}
             {isExpense && actual <= plan && "+"}
             {formatValue(actual - plan)} vs plan
           </span>

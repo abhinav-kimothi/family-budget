@@ -236,7 +236,12 @@ export default async function DashboardPage({
 
   // December of previous year totals (for trend chart "previous month" when current is January)
   const prevYearDecEntries = entriesPrevYear.filter((e) => e.month === 12);
-  const prevYearDecemberTotals = {
+  const prevYearDecemberTotals: {
+    income: number;
+    expenses: number;
+    investments: number;
+    net: number;
+  } = {
     income: prevYearDecEntries
       .filter((e) => e.category.type === "INCOME")
       .reduce((s, e) => s + Number(e.amount), 0),
@@ -246,6 +251,7 @@ export default async function DashboardPage({
     investments: prevYearDecEntries
       .filter((e) => e.category.type === "INVESTMENT")
       .reduce((s, e) => s + Number(e.amount), 0),
+    net: 0,
   };
   prevYearDecemberTotals.net =
     prevYearDecemberTotals.income -
@@ -295,11 +301,16 @@ export default async function DashboardPage({
     ? categories.filter((c) => (actualTotalsByCategory.get(c.id) ?? 0) > 0)
     : categories;
 
-  const categoryTotalsRows: CategoryTotalRow[] = categoriesForDisplay.map(
+  const categoryTotalsRows: CategoryTotalRow[] = categoriesForDisplay
+    .filter(
+      (c) =>
+        c.type === "INCOME" || c.type === "EXPENSE" || c.type === "INVESTMENT",
+    )
+    .map(
     (c) => ({
       categoryId: c.id,
       categoryName: c.name,
-      type: c.type,
+      type: c.type as CategoryTotalRow["type"],
       plan: budgetTotalsByCategory.get(c.id) ?? 0,
       actual: actualTotalsByCategory.get(c.id) ?? 0,
       prevActual: prevActualByCategory.get(c.id) ?? 0,
@@ -542,4 +553,3 @@ export default async function DashboardPage({
     </div>
   );
 }
-

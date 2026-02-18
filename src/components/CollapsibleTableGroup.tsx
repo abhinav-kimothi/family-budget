@@ -18,13 +18,12 @@ export function CollapsibleTableGroup({
   // Always render children so form inputs stay in the DOM when collapsed.
   // When collapsed, hide the rows visually so submitted form data includes all categories.
   const renderedChildren = React.Children.map(children, (child) => {
-    if (React.isValidElement(child) && !open) {
+    if (React.isValidElement<{ className?: string }>(child) && !open) {
       const existingClassName =
         typeof child.props.className === "string" ? child.props.className : "";
       return React.cloneElement(child, {
-        ...child.props,
         className: [existingClassName, "hidden"].filter(Boolean).join(" "),
-      } as Record<string, unknown>);
+      });
     }
     return child;
   });

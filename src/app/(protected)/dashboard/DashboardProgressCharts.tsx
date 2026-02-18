@@ -96,7 +96,9 @@ export function DashboardProgressCharts({
               className="text-slate-700 dark:text-slate-300"
             />
             <Tooltip
-              formatter={(value: number) => formatCur(value, currency)}
+              formatter={(value: number | undefined) =>
+                formatCur(value ?? 0, currency)
+              }
               contentStyle={{
                 fontSize: 12,
                 borderRadius: 8,

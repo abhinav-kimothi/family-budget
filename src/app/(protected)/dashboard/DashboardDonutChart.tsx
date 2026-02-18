@@ -83,7 +83,7 @@ export function DashboardDonutChart({
                 borderRadius: "8px",
               }}
               labelStyle={{ color: "var(--foreground)" }}
-              formatter={(value: number) => formatCurrency(value)}
+              formatter={(value: number | undefined) => formatCurrency(value ?? 0)}
             />
           </PieChart>
         </ResponsiveContainer>
