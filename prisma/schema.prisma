@@ -1,0 +1,93 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  VIEWER
+}
+
+enum CategoryType {
+  INCOME
+  EXPENSE
+  INVESTMENT
+  OTHER
+}
+
+model User {
+  id           Int       @id @default(autoincrement())
+  username     String    @unique
+  passwordHash String
+  role         Role      @default(VIEWER)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  sessions     Session[]
+}
+
+model Session {
+  id        Int      @id @default(autoincrement())
+  token     String   @unique
+  userId    Int
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Category {
+  id        Int          @id @default(autoincrement())
+  name      String
+  type      CategoryType
+  isActive  Boolean      @default(true)
+  sortOrder Int?         @default(0)
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
+  monthlyEntries MonthlyEntry[]
+  budgetEntries  BudgetEntry[]
+}
+
+model MonthlyEntry {
+  id         Int      @id @default(autoincrement())
+  year       Int
+  month      Int
+  amount     Decimal
+  notes      String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  categoryId Int
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@unique([year, month, categoryId])
+}
+
+model BudgetEntry {
+  id        Int      @id @default(autoincrement())
+  year      Int
+  month     Int
+  amount    Decimal
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  categoryId Int
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@unique([year, month, categoryId])
+}
+
+model Settings {
+  id             Int     @id @default(1)
+  initialBalance Decimal @default(0)
+  currency       String  @default("USD")
+}

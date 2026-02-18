@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CuKiZa Family Cashflow
 
-## Getting Started
+A simple budget tracker for your household: income, expenses, investments, budget vs actual, and shared access for family (admin and viewer roles).
 
-First, run the development server:
+## Getting started (development)
 
 ```bash
+npm install
+npx prisma generate
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000). Seed default users and categories once:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+curl -X POST http://localhost:3000/api/dev/seed
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Then log in as `admin1` / `familybudget` (or `viewer1` for view-only).
 
-## Learn More
+## Hosting so family can access it (same Wi‑Fi / home network)
 
-To learn more about Next.js, take a look at the following resources:
+Run the app on one computer (e.g. your laptop or a small home server) and have family open it in their browsers on the same network.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 1. Build and run for your network
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+On the machine that will host the app:
 
-## Deploy on Vercel
+```bash
+cd family-budget
+npm run build
+npm run start:lan
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+`start:lan` runs the app so it listens on all interfaces (`0.0.0.0`), not only localhost. The terminal will show something like:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Local:** http://localhost:3000  
+- **Network:** http://192.168.x.x:3000  
+
+### 2. Find your host machine’s IP
+
+- **macOS / Linux:** run `ifconfig` or `ip addr` and look for your Wi‑Fi address (e.g. `192.168.1.5` or `192.168.68.110`).  
+- Or use the **Network** URL printed by `npm run start:lan` (e.g. `http://192.168.68.110:3000`).
+
+### 3. Share the link with family
+
+Give everyone the **Network** URL, for example:
+
+- **http://192.168.68.110:3000**
+
+Anyone on the same Wi‑Fi can open that in a browser and log in with the same accounts (admin1, admin2, viewer1, viewer2 / `familybudget`).
+
+### 4. Keep it running
+
+- Leave the terminal (and computer) running while you want the app available.  
+- The SQLite database is in the project folder (`dev.db` or the path in `.env`), so avoid moving or deleting it.  
+- To stop: press `Ctrl+C` in that terminal.
+
+### Optional: run in the background
+
+- **macOS / Linux:** `npm run start:lan &` or use `nohup npm run start:lan &` so it keeps running after you close the terminal.  
+- For a more permanent setup, run it as a system service (e.g. systemd on Linux) or in a terminal multiplexer (e.g. `tmux`).
+
+### Security note
+
+This setup is for a **trusted home network**. The app is HTTP only (no HTTPS). Do not expose the app to the internet (no port forwarding on your router) unless you add HTTPS and proper security.
+
+## Learn more
+
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Deploy on Vercel](https://vercel.com/new) – for putting the app on the internet (requires DB hosting, e.g. Vercel Postgres or external DB).

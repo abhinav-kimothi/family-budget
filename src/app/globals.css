@@ -1,26 +1,66 @@
 @import "tailwindcss";
 
+/* Dark mode: data-theme on <html> so Tailwind dark: and CSS vars both apply */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* Light theme (default) */
 :root {
-  --background: #ffffff;
+  --background: #fafafa;
   --foreground: #171717;
+  --card-bg: #ffffff;
+  --border: #e5e5e5;
+  --success: #00e676;
+  --warning: #ff5252;
+  /* Brand */
+  --brand-primary: #ff8000;
+  --brand-primary-hover: #e67300;
+  --brand-secondary: #47c7fc;
+  --brand-secondary-hover: #2eb8f0;
+  /* Chart colors */
+  --chart-plan: #94a3b8;
+  --chart-actual: #059669;
+  --chart-income: #059669;
+  --chart-expense: #dc2626;
+  --chart-investment: #d97706;
+  --chart-net: #0284c7;
+  --chart-start: #64748b;
+  --chart-end: #47c7fc;
+}
+
+/* Dark theme – clearly different from light */
+[data-theme="dark"] {
+  --background: #0f172a;
+  --foreground: #f1f5f9;
+  --card-bg: #1e293b;
+  --border: #334155;
+  /* Brand (slightly brighter for dark bg) */
+  --brand-primary: #ff9933;
+  --brand-primary-hover: #ff8000;
+  --brand-secondary: #5dd3ff;
+  --brand-secondary-hover: #47c7fc;
+  /* Chart colors */
+  --chart-plan: #64748b;
+  --chart-actual: #34d399;
+  --chart-income: #34d399;
+  --chart-expense: #f87171;
+  --chart-investment: #fbbf24;
+  --chart-net: #38bdf8;
+  --chart-start: #475569;
+  --chart-end: #47c7fc;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-brand-primary: var(--brand-primary);
+  --color-brand-secondary: var(--brand-secondary);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  min-height: 100vh;
 }
