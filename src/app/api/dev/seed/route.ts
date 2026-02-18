@@ -3,6 +3,13 @@ import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/prisma";
 
 export async function POST() {
+  if (
+    process.env.NODE_ENV === "production" &&
+    process.env.ALLOW_DEV_SEED !== "true"
+  ) {
+    return new NextResponse("Not Found", { status: 404 });
+  }
+
   const existingUsers = await prisma.user.count();
 
   if (existingUsers > 0) {
@@ -95,4 +102,3 @@ export async function POST() {
     users: users.map((u) => ({ id: u.id, username: u.username, role: u.role })),
   });
 }
-

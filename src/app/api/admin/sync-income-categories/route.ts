@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { requireAdmin } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
 const INCOME_CATEGORY_NAMES = [
@@ -15,6 +16,8 @@ const INCOME_CATEGORY_NAMES = [
 ] as const;
 
 export async function POST() {
+  await requireAdmin();
+
   // Idempotently ensure all desired income categories exist and are typed correctly.
   const results = [];
 
@@ -57,4 +60,3 @@ export async function POST() {
     items: results,
   });
 }
-

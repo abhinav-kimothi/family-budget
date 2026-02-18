@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { requireAdmin } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
 const EXPENSE_CATEGORY_NAMES = [
@@ -27,6 +28,8 @@ const EXPENSE_CATEGORY_NAMES = [
 ] as const;
 
 export async function POST() {
+  await requireAdmin();
+
   const results = [];
 
   for (let index = 0; index < EXPENSE_CATEGORY_NAMES.length; index += 1) {
@@ -68,4 +71,3 @@ export async function POST() {
     items: results,
   });
 }
-
