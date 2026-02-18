@@ -28,6 +28,37 @@ function trendPct(current: number, previous: number): { str: string | null; num:
 
 type SortKey = "plan" | "actual" | "diff" | "trend";
 
+function SortHeader({
+  label,
+  keyName,
+  sortBy,
+  sortDir,
+  onSort,
+}: {
+  label: string;
+  keyName: SortKey;
+  sortBy: SortKey;
+  sortDir: "asc" | "desc";
+  onSort: (key: SortKey) => void;
+}) {
+  return (
+    <th className="px-3 py-2 text-right">
+      <button
+        type="button"
+        onClick={() => onSort(keyName)}
+        className="inline-flex items-center gap-1 font-semibold uppercase tracking-wider text-slate-800 transition hover:text-slate-600 dark:text-slate-300 dark:hover:text-slate-100"
+      >
+        {label}
+        {sortBy === keyName ? (
+          <span className="text-[10px]" aria-hidden>
+            {sortDir === "asc" ? "↑" : "↓"}
+          </span>
+        ) : null}
+      </button>
+    </th>
+  );
+}
+
 export function DashboardCategoryTotalsTable({
   rows,
   currency,
@@ -100,29 +131,6 @@ export function DashboardCategoryTotalsTable({
     }
   };
 
-  const SortHeader = ({
-    label,
-    keyName,
-  }: {
-    label: string;
-    keyName: SortKey;
-  }) => (
-    <th className="px-3 py-2 text-right">
-      <button
-        type="button"
-        onClick={() => cycleSort(keyName)}
-        className="inline-flex items-center gap-1 font-semibold uppercase tracking-wider text-slate-800 transition hover:text-slate-600 dark:text-slate-300 dark:hover:text-slate-100"
-      >
-        {label}
-        {sortBy === keyName ? (
-          <span className="text-[10px]" aria-hidden>
-            {sortDir === "asc" ? "↑" : "↓"}
-          </span>
-        ) : null}
-      </button>
-    </th>
-  );
-
   return (
     <div className="space-y-3">
       <div className="flex flex-wrap items-center gap-2 text-[11px]">
@@ -148,10 +156,34 @@ export function DashboardCategoryTotalsTable({
           <tr>
             <th className="px-3 py-2 text-left">Category</th>
             <th className="px-3 py-2 text-left">Type</th>
-            <SortHeader label="Plan" keyName="plan" />
-            <SortHeader label="Actual" keyName="actual" />
-            <SortHeader label="Diff" keyName="diff" />
-            <SortHeader label="Trend" keyName="trend" />
+            <SortHeader
+              label="Plan"
+              keyName="plan"
+              sortBy={sortBy}
+              sortDir={sortDir}
+              onSort={cycleSort}
+            />
+            <SortHeader
+              label="Actual"
+              keyName="actual"
+              sortBy={sortBy}
+              sortDir={sortDir}
+              onSort={cycleSort}
+            />
+            <SortHeader
+              label="Diff"
+              keyName="diff"
+              sortBy={sortBy}
+              sortDir={sortDir}
+              onSort={cycleSort}
+            />
+            <SortHeader
+              label="Trend"
+              keyName="trend"
+              sortBy={sortBy}
+              sortDir={sortDir}
+              onSort={cycleSort}
+            />
           </tr>
         </thead>
         <tbody>

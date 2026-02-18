@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const THEME_KEY = "theme";
 
@@ -11,13 +11,7 @@ function getThemeFromDOM(): "light" | "dark" {
 }
 
 export function ThemeToggle() {
-  const [mounted, setMounted] = useState(false);
-  const [theme, setTheme] = useState<"light" | "dark">("light");
-
-  useEffect(() => {
-    setMounted(true);
-    setTheme(getThemeFromDOM());
-  }, []);
+  const [theme, setTheme] = useState<"light" | "dark">(getThemeFromDOM);
 
   function applyTheme(next: "light" | "dark") {
     document.documentElement.setAttribute("data-theme", next);
@@ -31,15 +25,6 @@ export function ThemeToggle() {
     const current = document.documentElement.getAttribute("data-theme");
     const next = current === "dark" ? "light" : "dark";
     applyTheme(next);
-  }
-
-  if (!mounted) {
-    return (
-    <div
-        className="h-9 w-9 rounded-lg border border-slate-200 bg-slate-50 dark:border-slate-600 dark:bg-slate-700"
-        aria-hidden
-      />
-    );
   }
 
   const isDark = theme === "dark";
