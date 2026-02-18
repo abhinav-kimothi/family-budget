@@ -64,7 +64,10 @@ export function DashboardCashflowAreaChart({
                 borderRadius: "8px",
               }}
               labelStyle={{ color: "var(--foreground)" }}
-              formatter={(value: number) => [formatCurrency(value), "Balance"]}
+              formatter={(value: number | undefined) => [
+                formatCurrency(value ?? 0),
+                "Balance",
+              ]}
             />
             <Area
               type="monotone"
