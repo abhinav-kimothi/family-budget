@@ -1,18 +1,20 @@
 import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/auth";
+import { existsSync } from "node:fs";
 
 export const runtime = "nodejs";
 
 function chromeExecutablePath() {
   const candidates = [
     process.env.CHROME_EXECUTABLE_PATH,
-    "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
-    "/Applications/Chromium.app/Contents/MacOS/Chromium",
     "/usr/bin/google-chrome",
+    "/usr/bin/google-chrome-stable",
     "/usr/bin/chromium-browser",
     "/usr/bin/chromium",
+    "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+    "/Applications/Chromium.app/Contents/MacOS/Chromium",
   ].filter(Boolean) as string[];
-  return candidates[0]!;
+  return candidates.find((path) => existsSync(path)) ?? null;
 }
 
 export async function GET(request: Request) {
@@ -50,8 +52,15 @@ export async function GET(request: Request) {
   let browser: any;
   try {
     const { chromium } = await import("playwright-core");
+    const executablePath = chromeExecutablePath();
+    if (!executablePath) {
+      return new NextResponse(
+        "PDF export browser is not available on this server. Set CHROME_EXECUTABLE_PATH to a valid Chrome/Chromium binary.",
+        { status: 500 },
+      );
+    }
     browser = await chromium.launch({
-      executablePath: chromeExecutablePath(),
+      executablePath,
       headless: true,
       args: [
         "--no-sandbox",
@@ -101,4 +110,3 @@ export async function GET(request: Request) {
     return new NextResponse(message, { status: 500 });
   }
 }
-
