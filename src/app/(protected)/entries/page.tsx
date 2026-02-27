@@ -99,10 +99,22 @@ function computeRebalancedPlan(args: {
   }
 
   const candidates = categories
-    .filter((c) => c.planRebalanceEligible && (c.type === "EXPENSE" || c.type === "INVESTMENT"))
+    .filter((c) => c.planRebalanceEligible && (c.type === "EXPENSE" || c.type === "INVESTMENT"));
+  const fallbackCandidates = categories.filter(
+    (c) =>
+      c.type === "INVESTMENT" ||
+      (c.type === "EXPENSE" &&
+        (c.defaultNeedTier === "NON_ESSENTIAL" ||
+          c.defaultNeedTier === "TRAVEL" ||
+          c.defaultNeedTier === "LUXURY")),
+  );
+  const candidateSource = candidates.length > 0 ? candidates : fallbackCandidates;
+  const usingFallback = candidates.length === 0;
+
+  const rankedCandidates = candidateSource
     .map((c) => {
       const budget = Number(planByCategory.get(c.id) ?? 0);
-      const minFloor = Math.max(0, Number(c.planMinimumAmount ?? 0));
+      const minFloor = usingFallback ? 0 : Math.max(0, Number(c.planMinimumAmount ?? 0));
       const reducible = Math.max(0, budget - minFloor);
       const tierWeight =
         c.type === "INVESTMENT"
@@ -114,7 +126,7 @@ function computeRebalancedPlan(args: {
               : c.defaultNeedTier === "TRAVEL"
                 ? 3
                 : 4;
-      const explicitPriority = c.planRebalancePriority ?? null;
+      const explicitPriority = usingFallback ? null : c.planRebalancePriority ?? null;
       const autoPriorityBase =
         c.type === "INVESTMENT"
           ? 100
@@ -140,7 +152,7 @@ function computeRebalancedPlan(args: {
       return a.category.name.localeCompare(b.category.name);
     });
 
-  for (const candidate of candidates) {
+  for (const candidate of rankedCandidates) {
     if (remainingDeficit <= 0.0001) break;
     const cut = round2(Math.min(remainingDeficit, candidate.reducible));
     if (cut <= 0.0001) continue;
@@ -175,6 +187,14 @@ async function persistEntriesFromForm(formData: FormData, opts: { rebalancePlan:
     parsedActualByCategory.set(category.id, actual != null && Number.isFinite(actual) ? actual : null);
     parsedBudgetByCategory.set(category.id, budget != null && Number.isFinite(budget) ? budget : null);
   }
+  const categoryIds = categories.map((c) => c.id);
+  const existingBudgets = await prisma.budgetEntry.findMany({
+    where: { year, month, categoryId: { in: categoryIds } },
+    select: { id: true, categoryId: true, amount: true, rebalancedAmount: true },
+  });
+  const existingBudgetByCategory = new Map(
+    existingBudgets.map((b) => [b.categoryId, b]),
+  );
 
   const rebalanceResult = opts.rebalancePlan
     ? computeRebalancedPlan({
@@ -233,19 +253,23 @@ async function persistEntriesFromForm(formData: FormData, opts: { rebalancePlan:
     if (budgetValue != null) {
       const amount = Number(budgetValue);
       if (!Number.isNaN(amount)) {
-        const existingBudget = await prisma.budgetEntry.findFirst({
-          where: { year, month, categoryId: category.id },
-        });
+        const existingBudgetFromMap = existingBudgetByCategory.get(category.id);
 
-        if (existingBudget) {
+        if (existingBudgetFromMap) {
+          const existingAmount = Number(existingBudgetFromMap.amount ?? 0);
+          const budgetChanged = Math.abs(existingAmount - amount) > 0.0001;
+          const nextRebalancedAmount = opts.rebalancePlan
+            ? rebalancedBudgetValue != null
+              ? Number(rebalancedBudgetValue)
+              : null
+            : budgetChanged
+              ? null
+              : existingBudgetFromMap.rebalancedAmount ?? null;
           await prisma.budgetEntry.update({
-            where: { id: existingBudget.id },
+            where: { id: existingBudgetFromMap.id },
             data: {
               amount,
-              rebalancedAmount:
-                opts.rebalancePlan && rebalancedBudgetValue != null
-                  ? Number(rebalancedBudgetValue)
-                  : null,
+              rebalancedAmount: nextRebalancedAmount,
             },
           });
         } else {

@@ -100,7 +100,8 @@ export async function POST(request: Request) {
       if (!Number.isNaN(amount)) {
         const existing = existingBudgetByCategory.get(category.id);
         if (existing) {
-          if (Number(existing.amount) !== amount) {
+          const amountChanged = Math.abs(Number(existing.amount) - amount) > 0.0001;
+          if (amountChanged) {
             await prisma.budgetEntry.update({
               where: { id: existing.id },
               data: { amount, rebalancedAmount: null },
