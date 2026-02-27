@@ -23,6 +23,25 @@ enum CategoryType {
   OTHER
 }
 
+enum ExpenseAllocationType {
+  IMMEDIATE
+  QUARTERLY
+  ANNUAL
+  CUSTOM
+}
+
+enum ExpenseNeedTier {
+  ESSENTIAL
+  NON_ESSENTIAL
+  TRAVEL
+  LUXURY
+}
+
+enum AllocationStartMode {
+  THIS_MONTH
+  NEXT_MONTH
+}
+
 model User {
   id           Int       @id @default(autoincrement())
   username     String    @unique
@@ -48,6 +67,11 @@ model Category {
   id        Int          @id @default(autoincrement())
   name      String
   type      CategoryType
+  defaultNeedTier ExpenseNeedTier?
+  trackAnnualBudgetRemaining Boolean @default(false)
+  planRebalanceEligible Boolean @default(false)
+  planRebalancePriority Int?
+  planMinimumAmount Decimal @default(0)
   isActive  Boolean      @default(true)
   sortOrder Int?         @default(0)
   createdAt DateTime     @default(now())
@@ -55,6 +79,7 @@ model Category {
 
   monthlyEntries MonthlyEntry[]
   budgetEntries  BudgetEntry[]
+  expenseAllocations ExpenseAllocation[]
 }
 
 model MonthlyEntry {
@@ -77,6 +102,7 @@ model BudgetEntry {
   year      Int
   month     Int
   amount    Decimal
+  rebalancedAmount Decimal?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -89,5 +115,27 @@ model BudgetEntry {
 model Settings {
   id             Int     @id @default(1)
   initialBalance Decimal @default(0)
+  openingInvestableBalance Decimal @default(0)
   currency       String  @default("USD")
+}
+
+model ExpenseAllocation {
+  id            Int                 @id @default(autoincrement())
+  year          Int
+  month         Int
+  amount        Decimal
+  type          ExpenseAllocationType
+  durationMonths Int?
+  startMode     AllocationStartMode @default(THIS_MONTH)
+  recognitionStartYear Int?
+  recognitionStartMonth Int?
+  needTier      ExpenseNeedTier?
+  notes         String?
+  createdAt     DateTime            @default(now())
+  updatedAt     DateTime            @updatedAt
+
+  categoryId    Int
+  category      Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@index([year, month, categoryId])
 }

@@ -25,3 +25,31 @@ export const CategoryType = {
 } as const
 
 export type CategoryType = (typeof CategoryType)[keyof typeof CategoryType]
+
+
+export const ExpenseAllocationType = {
+  IMMEDIATE: 'IMMEDIATE',
+  QUARTERLY: 'QUARTERLY',
+  ANNUAL: 'ANNUAL',
+  CUSTOM: 'CUSTOM'
+} as const
+
+export type ExpenseAllocationType = (typeof ExpenseAllocationType)[keyof typeof ExpenseAllocationType]
+
+
+export const ExpenseNeedTier = {
+  ESSENTIAL: 'ESSENTIAL',
+  NON_ESSENTIAL: 'NON_ESSENTIAL',
+  TRAVEL: 'TRAVEL',
+  LUXURY: 'LUXURY'
+} as const
+
+export type ExpenseNeedTier = (typeof ExpenseNeedTier)[keyof typeof ExpenseNeedTier]
+
+
+export const AllocationStartMode = {
+  THIS_MONTH: 'THIS_MONTH',
+  NEXT_MONTH: 'NEXT_MONTH'
+} as const
+
+export type AllocationStartMode = (typeof AllocationStartMode)[keyof typeof AllocationStartMode]

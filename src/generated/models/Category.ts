@@ -28,11 +28,15 @@ export type AggregateCategory = {
 
 export type CategoryAvgAggregateOutputType = {
   id: number | null
+  planRebalancePriority: number | null
+  planMinimumAmount: runtime.Decimal | null
   sortOrder: number | null
 }
 
 export type CategorySumAggregateOutputType = {
   id: number | null
+  planRebalancePriority: number | null
+  planMinimumAmount: runtime.Decimal | null
   sortOrder: number | null
 }
 
@@ -40,6 +44,11 @@ export type CategoryMinAggregateOutputType = {
   id: number | null
   name: string | null
   type: $Enums.CategoryType | null
+  defaultNeedTier: $Enums.ExpenseNeedTier | null
+  trackAnnualBudgetRemaining: boolean | null
+  planRebalanceEligible: boolean | null
+  planRebalancePriority: number | null
+  planMinimumAmount: runtime.Decimal | null
   isActive: boolean | null
   sortOrder: number | null
   createdAt: Date | null
@@ -50,6 +59,11 @@ export type CategoryMaxAggregateOutputType = {
   id: number | null
   name: string | null
   type: $Enums.CategoryType | null
+  defaultNeedTier: $Enums.ExpenseNeedTier | null
+  trackAnnualBudgetRemaining: boolean | null
+  planRebalanceEligible: boolean | null
+  planRebalancePriority: number | null
+  planMinimumAmount: runtime.Decimal | null
   isActive: boolean | null
   sortOrder: number | null
   createdAt: Date | null
@@ -60,6 +74,11 @@ export type CategoryCountAggregateOutputType = {
   id: number
   name: number
   type: number
+  defaultNeedTier: number
+  trackAnnualBudgetRemaining: number
+  planRebalanceEligible: number
+  planRebalancePriority: number
+  planMinimumAmount: number
   isActive: number
   sortOrder: number
   createdAt: number
@@ -70,11 +89,15 @@ export type CategoryCountAggregateOutputType = {
 
 export type CategoryAvgAggregateInputType = {
   id?: true
+  planRebalancePriority?: true
+  planMinimumAmount?: true
   sortOrder?: true
 }
 
 export type CategorySumAggregateInputType = {
   id?: true
+  planRebalancePriority?: true
+  planMinimumAmount?: true
   sortOrder?: true
 }
 
@@ -82,6 +105,11 @@ export type CategoryMinAggregateInputType = {
   id?: true
   name?: true
   type?: true
+  defaultNeedTier?: true
+  trackAnnualBudgetRemaining?: true
+  planRebalanceEligible?: true
+  planRebalancePriority?: true
+  planMinimumAmount?: true
   isActive?: true
   sortOrder?: true
   createdAt?: true
@@ -92,6 +120,11 @@ export type CategoryMaxAggregateInputType = {
   id?: true
   name?: true
   type?: true
+  defaultNeedTier?: true
+  trackAnnualBudgetRemaining?: true
+  planRebalanceEligible?: true
+  planRebalancePriority?: true
+  planMinimumAmount?: true
   isActive?: true
   sortOrder?: true
   createdAt?: true
@@ -102,6 +135,11 @@ export type CategoryCountAggregateInputType = {
   id?: true
   name?: true
   type?: true
+  defaultNeedTier?: true
+  trackAnnualBudgetRemaining?: true
+  planRebalanceEligible?: true
+  planRebalancePriority?: true
+  planMinimumAmount?: true
   isActive?: true
   sortOrder?: true
   createdAt?: true
@@ -199,6 +237,11 @@ export type CategoryGroupByOutputType = {
   id: number
   name: string
   type: $Enums.CategoryType
+  defaultNeedTier: $Enums.ExpenseNeedTier | null
+  trackAnnualBudgetRemaining: boolean
+  planRebalanceEligible: boolean
+  planRebalancePriority: number | null
+  planMinimumAmount: runtime.Decimal
   isActive: boolean
   sortOrder: number | null
   createdAt: Date
@@ -232,24 +275,36 @@ export type CategoryWhereInput = {
   id?: Prisma.IntFilter<"Category"> | number
   name?: Prisma.StringFilter<"Category"> | string
   type?: Prisma.EnumCategoryTypeFilter<"Category"> | $Enums.CategoryType
+  defaultNeedTier?: Prisma.EnumExpenseNeedTierNullableFilter<"Category"> | $Enums.ExpenseNeedTier | null
+  trackAnnualBudgetRemaining?: Prisma.BoolFilter<"Category"> | boolean
+  planRebalanceEligible?: Prisma.BoolFilter<"Category"> | boolean
+  planRebalancePriority?: Prisma.IntNullableFilter<"Category"> | number | null
+  planMinimumAmount?: Prisma.DecimalFilter<"Category"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   isActive?: Prisma.BoolFilter<"Category"> | boolean
   sortOrder?: Prisma.IntNullableFilter<"Category"> | number | null
   createdAt?: Prisma.DateTimeFilter<"Category"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Category"> | Date | string
   monthlyEntries?: Prisma.MonthlyEntryListRelationFilter
   budgetEntries?: Prisma.BudgetEntryListRelationFilter
+  expenseAllocations?: Prisma.ExpenseAllocationListRelationFilter
 }
 
 export type CategoryOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   type?: Prisma.SortOrder
+  defaultNeedTier?: Prisma.SortOrderInput | Prisma.SortOrder
+  trackAnnualBudgetRemaining?: Prisma.SortOrder
+  planRebalanceEligible?: Prisma.SortOrder
+  planRebalancePriority?: Prisma.SortOrderInput | Prisma.SortOrder
+  planMinimumAmount?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   monthlyEntries?: Prisma.MonthlyEntryOrderByRelationAggregateInput
   budgetEntries?: Prisma.BudgetEntryOrderByRelationAggregateInput
+  expenseAllocations?: Prisma.ExpenseAllocationOrderByRelationAggregateInput
 }
 
 export type CategoryWhereUniqueInput = Prisma.AtLeast<{
@@ -259,18 +314,29 @@ export type CategoryWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.CategoryWhereInput | Prisma.CategoryWhereInput[]
   name?: Prisma.StringFilter<"Category"> | string
   type?: Prisma.EnumCategoryTypeFilter<"Category"> | $Enums.CategoryType
+  defaultNeedTier?: Prisma.EnumExpenseNeedTierNullableFilter<"Category"> | $Enums.ExpenseNeedTier | null
+  trackAnnualBudgetRemaining?: Prisma.BoolFilter<"Category"> | boolean
+  planRebalanceEligible?: Prisma.BoolFilter<"Category"> | boolean
+  planRebalancePriority?: Prisma.IntNullableFilter<"Category"> | number | null
+  planMinimumAmount?: Prisma.DecimalFilter<"Category"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   isActive?: Prisma.BoolFilter<"Category"> | boolean
   sortOrder?: Prisma.IntNullableFilter<"Category"> | number | null
   createdAt?: Prisma.DateTimeFilter<"Category"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Category"> | Date | string
   monthlyEntries?: Prisma.MonthlyEntryListRelationFilter
   budgetEntries?: Prisma.BudgetEntryListRelationFilter
+  expenseAllocations?: Prisma.ExpenseAllocationListRelationFilter
 }, "id">
 
 export type CategoryOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   type?: Prisma.SortOrder
+  defaultNeedTier?: Prisma.SortOrderInput | Prisma.SortOrder
+  trackAnnualBudgetRemaining?: Prisma.SortOrder
+  planRebalanceEligible?: Prisma.SortOrder
+  planRebalancePriority?: Prisma.SortOrderInput | Prisma.SortOrder
+  planMinimumAmount?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -289,6 +355,11 @@ export type CategoryScalarWhereWithAggregatesInput = {
   id?: Prisma.IntWithAggregatesFilter<"Category"> | number
   name?: Prisma.StringWithAggregatesFilter<"Category"> | string
   type?: Prisma.EnumCategoryTypeWithAggregatesFilter<"Category"> | $Enums.CategoryType
+  defaultNeedTier?: Prisma.EnumExpenseNeedTierNullableWithAggregatesFilter<"Category"> | $Enums.ExpenseNeedTier | null
+  trackAnnualBudgetRemaining?: Prisma.BoolWithAggregatesFilter<"Category"> | boolean
+  planRebalanceEligible?: Prisma.BoolWithAggregatesFilter<"Category"> | boolean
+  planRebalancePriority?: Prisma.IntNullableWithAggregatesFilter<"Category"> | number | null
+  planMinimumAmount?: Prisma.DecimalWithAggregatesFilter<"Category"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   isActive?: Prisma.BoolWithAggregatesFilter<"Category"> | boolean
   sortOrder?: Prisma.IntNullableWithAggregatesFilter<"Category"> | number | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Category"> | Date | string
@@ -298,53 +369,82 @@ export type CategoryScalarWhereWithAggregatesInput = {
 export type CategoryCreateInput = {
   name: string
   type: $Enums.CategoryType
+  defaultNeedTier?: $Enums.ExpenseNeedTier | null
+  trackAnnualBudgetRemaining?: boolean
+  planRebalanceEligible?: boolean
+  planRebalancePriority?: number | null
+  planMinimumAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
   isActive?: boolean
   sortOrder?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   monthlyEntries?: Prisma.MonthlyEntryCreateNestedManyWithoutCategoryInput
   budgetEntries?: Prisma.BudgetEntryCreateNestedManyWithoutCategoryInput
+  expenseAllocations?: Prisma.ExpenseAllocationCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryUncheckedCreateInput = {
   id?: number
   name: string
   type: $Enums.CategoryType
+  defaultNeedTier?: $Enums.ExpenseNeedTier | null
+  trackAnnualBudgetRemaining?: boolean
+  planRebalanceEligible?: boolean
+  planRebalancePriority?: number | null
+  planMinimumAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
   isActive?: boolean
   sortOrder?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   monthlyEntries?: Prisma.MonthlyEntryUncheckedCreateNestedManyWithoutCategoryInput
   budgetEntries?: Prisma.BudgetEntryUncheckedCreateNestedManyWithoutCategoryInput
+  expenseAllocations?: Prisma.ExpenseAllocationUncheckedCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumCategoryTypeFieldUpdateOperationsInput | $Enums.CategoryType
+  defaultNeedTier?: Prisma.NullableEnumExpenseNeedTierFieldUpdateOperationsInput | $Enums.ExpenseNeedTier | null
+  trackAnnualBudgetRemaining?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  planRebalanceEligible?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  planRebalancePriority?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  planMinimumAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sortOrder?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   monthlyEntries?: Prisma.MonthlyEntryUpdateManyWithoutCategoryNestedInput
   budgetEntries?: Prisma.BudgetEntryUpdateManyWithoutCategoryNestedInput
+  expenseAllocations?: Prisma.ExpenseAllocationUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumCategoryTypeFieldUpdateOperationsInput | $Enums.CategoryType
+  defaultNeedTier?: Prisma.NullableEnumExpenseNeedTierFieldUpdateOperationsInput | $Enums.ExpenseNeedTier | null
+  trackAnnualBudgetRemaining?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  planRebalanceEligible?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  planRebalancePriority?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  planMinimumAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sortOrder?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   monthlyEntries?: Prisma.MonthlyEntryUncheckedUpdateManyWithoutCategoryNestedInput
   budgetEntries?: Prisma.BudgetEntryUncheckedUpdateManyWithoutCategoryNestedInput
+  expenseAllocations?: Prisma.ExpenseAllocationUncheckedUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryCreateManyInput = {
   id?: number
   name: string
   type: $Enums.CategoryType
+  defaultNeedTier?: $Enums.ExpenseNeedTier | null
+  trackAnnualBudgetRemaining?: boolean
+  planRebalanceEligible?: boolean
+  planRebalancePriority?: number | null
+  planMinimumAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
   isActive?: boolean
   sortOrder?: number | null
   createdAt?: Date | string
@@ -354,6 +454,11 @@ export type CategoryCreateManyInput = {
 export type CategoryUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumCategoryTypeFieldUpdateOperationsInput | $Enums.CategoryType
+  defaultNeedTier?: Prisma.NullableEnumExpenseNeedTierFieldUpdateOperationsInput | $Enums.ExpenseNeedTier | null
+  trackAnnualBudgetRemaining?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  planRebalanceEligible?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  planRebalancePriority?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  planMinimumAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sortOrder?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -364,6 +469,11 @@ export type CategoryUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumCategoryTypeFieldUpdateOperationsInput | $Enums.CategoryType
+  defaultNeedTier?: Prisma.NullableEnumExpenseNeedTierFieldUpdateOperationsInput | $Enums.ExpenseNeedTier | null
+  trackAnnualBudgetRemaining?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  planRebalanceEligible?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  planRebalancePriority?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  planMinimumAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sortOrder?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -374,6 +484,11 @@ export type CategoryCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   type?: Prisma.SortOrder
+  defaultNeedTier?: Prisma.SortOrder
+  trackAnnualBudgetRemaining?: Prisma.SortOrder
+  planRebalanceEligible?: Prisma.SortOrder
+  planRebalancePriority?: Prisma.SortOrder
+  planMinimumAmount?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -382,6 +497,8 @@ export type CategoryCountOrderByAggregateInput = {
 
 export type CategoryAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  planRebalancePriority?: Prisma.SortOrder
+  planMinimumAmount?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
 }
 
@@ -389,6 +506,11 @@ export type CategoryMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   type?: Prisma.SortOrder
+  defaultNeedTier?: Prisma.SortOrder
+  trackAnnualBudgetRemaining?: Prisma.SortOrder
+  planRebalanceEligible?: Prisma.SortOrder
+  planRebalancePriority?: Prisma.SortOrder
+  planMinimumAmount?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -399,6 +521,11 @@ export type CategoryMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   type?: Prisma.SortOrder
+  defaultNeedTier?: Prisma.SortOrder
+  trackAnnualBudgetRemaining?: Prisma.SortOrder
+  planRebalanceEligible?: Prisma.SortOrder
+  planRebalancePriority?: Prisma.SortOrder
+  planMinimumAmount?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -407,6 +534,8 @@ export type CategoryMinOrderByAggregateInput = {
 
 export type CategorySumOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  planRebalancePriority?: Prisma.SortOrder
+  planMinimumAmount?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
 }
 
@@ -419,6 +548,10 @@ export type EnumCategoryTypeFieldUpdateOperationsInput = {
   set?: $Enums.CategoryType
 }
 
+export type NullableEnumExpenseNeedTierFieldUpdateOperationsInput = {
+  set?: $Enums.ExpenseNeedTier | null
+}
+
 export type BoolFieldUpdateOperationsInput = {
   set?: boolean
 }
@@ -429,6 +562,14 @@ export type NullableIntFieldUpdateOperationsInput = {
   decrement?: number
   multiply?: number
   divide?: number
+}
+
+export type DecimalFieldUpdateOperationsInput = {
+  set?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
 export type CategoryCreateNestedOneWithoutMonthlyEntriesInput = {
@@ -459,25 +600,51 @@ export type CategoryUpdateOneRequiredWithoutBudgetEntriesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CategoryUpdateToOneWithWhereWithoutBudgetEntriesInput, Prisma.CategoryUpdateWithoutBudgetEntriesInput>, Prisma.CategoryUncheckedUpdateWithoutBudgetEntriesInput>
 }
 
+export type CategoryCreateNestedOneWithoutExpenseAllocationsInput = {
+  create?: Prisma.XOR<Prisma.CategoryCreateWithoutExpenseAllocationsInput, Prisma.CategoryUncheckedCreateWithoutExpenseAllocationsInput>
+  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutExpenseAllocationsInput
+  connect?: Prisma.CategoryWhereUniqueInput
+}
+
+export type CategoryUpdateOneRequiredWithoutExpenseAllocationsNestedInput = {
+  create?: Prisma.XOR<Prisma.CategoryCreateWithoutExpenseAllocationsInput, Prisma.CategoryUncheckedCreateWithoutExpenseAllocationsInput>
+  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutExpenseAllocationsInput
+  upsert?: Prisma.CategoryUpsertWithoutExpenseAllocationsInput
+  connect?: Prisma.CategoryWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CategoryUpdateToOneWithWhereWithoutExpenseAllocationsInput, Prisma.CategoryUpdateWithoutExpenseAllocationsInput>, Prisma.CategoryUncheckedUpdateWithoutExpenseAllocationsInput>
+}
+
 export type CategoryCreateWithoutMonthlyEntriesInput = {
   name: string
   type: $Enums.CategoryType
+  defaultNeedTier?: $Enums.ExpenseNeedTier | null
+  trackAnnualBudgetRemaining?: boolean
+  planRebalanceEligible?: boolean
+  planRebalancePriority?: number | null
+  planMinimumAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
   isActive?: boolean
   sortOrder?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   budgetEntries?: Prisma.BudgetEntryCreateNestedManyWithoutCategoryInput
+  expenseAllocations?: Prisma.ExpenseAllocationCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryUncheckedCreateWithoutMonthlyEntriesInput = {
   id?: number
   name: string
   type: $Enums.CategoryType
+  defaultNeedTier?: $Enums.ExpenseNeedTier | null
+  trackAnnualBudgetRemaining?: boolean
+  planRebalanceEligible?: boolean
+  planRebalancePriority?: number | null
+  planMinimumAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
   isActive?: boolean
   sortOrder?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   budgetEntries?: Prisma.BudgetEntryUncheckedCreateNestedManyWithoutCategoryInput
+  expenseAllocations?: Prisma.ExpenseAllocationUncheckedCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryCreateOrConnectWithoutMonthlyEntriesInput = {
@@ -499,43 +666,67 @@ export type CategoryUpdateToOneWithWhereWithoutMonthlyEntriesInput = {
 export type CategoryUpdateWithoutMonthlyEntriesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumCategoryTypeFieldUpdateOperationsInput | $Enums.CategoryType
+  defaultNeedTier?: Prisma.NullableEnumExpenseNeedTierFieldUpdateOperationsInput | $Enums.ExpenseNeedTier | null
+  trackAnnualBudgetRemaining?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  planRebalanceEligible?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  planRebalancePriority?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  planMinimumAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sortOrder?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   budgetEntries?: Prisma.BudgetEntryUpdateManyWithoutCategoryNestedInput
+  expenseAllocations?: Prisma.ExpenseAllocationUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryUncheckedUpdateWithoutMonthlyEntriesInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumCategoryTypeFieldUpdateOperationsInput | $Enums.CategoryType
+  defaultNeedTier?: Prisma.NullableEnumExpenseNeedTierFieldUpdateOperationsInput | $Enums.ExpenseNeedTier | null
+  trackAnnualBudgetRemaining?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  planRebalanceEligible?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  planRebalancePriority?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  planMinimumAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sortOrder?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   budgetEntries?: Prisma.BudgetEntryUncheckedUpdateManyWithoutCategoryNestedInput
+  expenseAllocations?: Prisma.ExpenseAllocationUncheckedUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryCreateWithoutBudgetEntriesInput = {
   name: string
   type: $Enums.CategoryType
+  defaultNeedTier?: $Enums.ExpenseNeedTier | null
+  trackAnnualBudgetRemaining?: boolean
+  planRebalanceEligible?: boolean
+  planRebalancePriority?: number | null
+  planMinimumAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
   isActive?: boolean
   sortOrder?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   monthlyEntries?: Prisma.MonthlyEntryCreateNestedManyWithoutCategoryInput
+  expenseAllocations?: Prisma.ExpenseAllocationCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryUncheckedCreateWithoutBudgetEntriesInput = {
   id?: number
   name: string
   type: $Enums.CategoryType
+  defaultNeedTier?: $Enums.ExpenseNeedTier | null
+  trackAnnualBudgetRemaining?: boolean
+  planRebalanceEligible?: boolean
+  planRebalancePriority?: number | null
+  planMinimumAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
   isActive?: boolean
   sortOrder?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   monthlyEntries?: Prisma.MonthlyEntryUncheckedCreateNestedManyWithoutCategoryInput
+  expenseAllocations?: Prisma.ExpenseAllocationUncheckedCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryCreateOrConnectWithoutBudgetEntriesInput = {
@@ -557,22 +748,116 @@ export type CategoryUpdateToOneWithWhereWithoutBudgetEntriesInput = {
 export type CategoryUpdateWithoutBudgetEntriesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumCategoryTypeFieldUpdateOperationsInput | $Enums.CategoryType
+  defaultNeedTier?: Prisma.NullableEnumExpenseNeedTierFieldUpdateOperationsInput | $Enums.ExpenseNeedTier | null
+  trackAnnualBudgetRemaining?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  planRebalanceEligible?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  planRebalancePriority?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  planMinimumAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sortOrder?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   monthlyEntries?: Prisma.MonthlyEntryUpdateManyWithoutCategoryNestedInput
+  expenseAllocations?: Prisma.ExpenseAllocationUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryUncheckedUpdateWithoutBudgetEntriesInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumCategoryTypeFieldUpdateOperationsInput | $Enums.CategoryType
+  defaultNeedTier?: Prisma.NullableEnumExpenseNeedTierFieldUpdateOperationsInput | $Enums.ExpenseNeedTier | null
+  trackAnnualBudgetRemaining?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  planRebalanceEligible?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  planRebalancePriority?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  planMinimumAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sortOrder?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   monthlyEntries?: Prisma.MonthlyEntryUncheckedUpdateManyWithoutCategoryNestedInput
+  expenseAllocations?: Prisma.ExpenseAllocationUncheckedUpdateManyWithoutCategoryNestedInput
+}
+
+export type CategoryCreateWithoutExpenseAllocationsInput = {
+  name: string
+  type: $Enums.CategoryType
+  defaultNeedTier?: $Enums.ExpenseNeedTier | null
+  trackAnnualBudgetRemaining?: boolean
+  planRebalanceEligible?: boolean
+  planRebalancePriority?: number | null
+  planMinimumAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  isActive?: boolean
+  sortOrder?: number | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  monthlyEntries?: Prisma.MonthlyEntryCreateNestedManyWithoutCategoryInput
+  budgetEntries?: Prisma.BudgetEntryCreateNestedManyWithoutCategoryInput
+}
+
+export type CategoryUncheckedCreateWithoutExpenseAllocationsInput = {
+  id?: number
+  name: string
+  type: $Enums.CategoryType
+  defaultNeedTier?: $Enums.ExpenseNeedTier | null
+  trackAnnualBudgetRemaining?: boolean
+  planRebalanceEligible?: boolean
+  planRebalancePriority?: number | null
+  planMinimumAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  isActive?: boolean
+  sortOrder?: number | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  monthlyEntries?: Prisma.MonthlyEntryUncheckedCreateNestedManyWithoutCategoryInput
+  budgetEntries?: Prisma.BudgetEntryUncheckedCreateNestedManyWithoutCategoryInput
+}
+
+export type CategoryCreateOrConnectWithoutExpenseAllocationsInput = {
+  where: Prisma.CategoryWhereUniqueInput
+  create: Prisma.XOR<Prisma.CategoryCreateWithoutExpenseAllocationsInput, Prisma.CategoryUncheckedCreateWithoutExpenseAllocationsInput>
+}
+
+export type CategoryUpsertWithoutExpenseAllocationsInput = {
+  update: Prisma.XOR<Prisma.CategoryUpdateWithoutExpenseAllocationsInput, Prisma.CategoryUncheckedUpdateWithoutExpenseAllocationsInput>
+  create: Prisma.XOR<Prisma.CategoryCreateWithoutExpenseAllocationsInput, Prisma.CategoryUncheckedCreateWithoutExpenseAllocationsInput>
+  where?: Prisma.CategoryWhereInput
+}
+
+export type CategoryUpdateToOneWithWhereWithoutExpenseAllocationsInput = {
+  where?: Prisma.CategoryWhereInput
+  data: Prisma.XOR<Prisma.CategoryUpdateWithoutExpenseAllocationsInput, Prisma.CategoryUncheckedUpdateWithoutExpenseAllocationsInput>
+}
+
+export type CategoryUpdateWithoutExpenseAllocationsInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumCategoryTypeFieldUpdateOperationsInput | $Enums.CategoryType
+  defaultNeedTier?: Prisma.NullableEnumExpenseNeedTierFieldUpdateOperationsInput | $Enums.ExpenseNeedTier | null
+  trackAnnualBudgetRemaining?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  planRebalanceEligible?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  planRebalancePriority?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  planMinimumAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  monthlyEntries?: Prisma.MonthlyEntryUpdateManyWithoutCategoryNestedInput
+  budgetEntries?: Prisma.BudgetEntryUpdateManyWithoutCategoryNestedInput
+}
+
+export type CategoryUncheckedUpdateWithoutExpenseAllocationsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumCategoryTypeFieldUpdateOperationsInput | $Enums.CategoryType
+  defaultNeedTier?: Prisma.NullableEnumExpenseNeedTierFieldUpdateOperationsInput | $Enums.ExpenseNeedTier | null
+  trackAnnualBudgetRemaining?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  planRebalanceEligible?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  planRebalancePriority?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  planMinimumAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  monthlyEntries?: Prisma.MonthlyEntryUncheckedUpdateManyWithoutCategoryNestedInput
+  budgetEntries?: Prisma.BudgetEntryUncheckedUpdateManyWithoutCategoryNestedInput
 }
 
 
@@ -583,11 +868,13 @@ export type CategoryUncheckedUpdateWithoutBudgetEntriesInput = {
 export type CategoryCountOutputType = {
   monthlyEntries: number
   budgetEntries: number
+  expenseAllocations: number
 }
 
 export type CategoryCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   monthlyEntries?: boolean | CategoryCountOutputTypeCountMonthlyEntriesArgs
   budgetEntries?: boolean | CategoryCountOutputTypeCountBudgetEntriesArgs
+  expenseAllocations?: boolean | CategoryCountOutputTypeCountExpenseAllocationsArgs
 }
 
 /**
@@ -614,17 +901,30 @@ export type CategoryCountOutputTypeCountBudgetEntriesArgs<ExtArgs extends runtim
   where?: Prisma.BudgetEntryWhereInput
 }
 
+/**
+ * CategoryCountOutputType without action
+ */
+export type CategoryCountOutputTypeCountExpenseAllocationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ExpenseAllocationWhereInput
+}
+
 
 export type CategorySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
   type?: boolean
+  defaultNeedTier?: boolean
+  trackAnnualBudgetRemaining?: boolean
+  planRebalanceEligible?: boolean
+  planRebalancePriority?: boolean
+  planMinimumAmount?: boolean
   isActive?: boolean
   sortOrder?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   monthlyEntries?: boolean | Prisma.Category$monthlyEntriesArgs<ExtArgs>
   budgetEntries?: boolean | Prisma.Category$budgetEntriesArgs<ExtArgs>
+  expenseAllocations?: boolean | Prisma.Category$expenseAllocationsArgs<ExtArgs>
   _count?: boolean | Prisma.CategoryCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["category"]>
 
@@ -632,6 +932,11 @@ export type CategorySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   id?: boolean
   name?: boolean
   type?: boolean
+  defaultNeedTier?: boolean
+  trackAnnualBudgetRemaining?: boolean
+  planRebalanceEligible?: boolean
+  planRebalancePriority?: boolean
+  planMinimumAmount?: boolean
   isActive?: boolean
   sortOrder?: boolean
   createdAt?: boolean
@@ -642,6 +947,11 @@ export type CategorySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   id?: boolean
   name?: boolean
   type?: boolean
+  defaultNeedTier?: boolean
+  trackAnnualBudgetRemaining?: boolean
+  planRebalanceEligible?: boolean
+  planRebalancePriority?: boolean
+  planMinimumAmount?: boolean
   isActive?: boolean
   sortOrder?: boolean
   createdAt?: boolean
@@ -652,16 +962,22 @@ export type CategorySelectScalar = {
   id?: boolean
   name?: boolean
   type?: boolean
+  defaultNeedTier?: boolean
+  trackAnnualBudgetRemaining?: boolean
+  planRebalanceEligible?: boolean
+  planRebalancePriority?: boolean
+  planMinimumAmount?: boolean
   isActive?: boolean
   sortOrder?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type CategoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "type" | "isActive" | "sortOrder" | "createdAt" | "updatedAt", ExtArgs["result"]["category"]>
+export type CategoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "type" | "defaultNeedTier" | "trackAnnualBudgetRemaining" | "planRebalanceEligible" | "planRebalancePriority" | "planMinimumAmount" | "isActive" | "sortOrder" | "createdAt" | "updatedAt", ExtArgs["result"]["category"]>
 export type CategoryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   monthlyEntries?: boolean | Prisma.Category$monthlyEntriesArgs<ExtArgs>
   budgetEntries?: boolean | Prisma.Category$budgetEntriesArgs<ExtArgs>
+  expenseAllocations?: boolean | Prisma.Category$expenseAllocationsArgs<ExtArgs>
   _count?: boolean | Prisma.CategoryCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CategoryIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -672,11 +988,17 @@ export type $CategoryPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   objects: {
     monthlyEntries: Prisma.$MonthlyEntryPayload<ExtArgs>[]
     budgetEntries: Prisma.$BudgetEntryPayload<ExtArgs>[]
+    expenseAllocations: Prisma.$ExpenseAllocationPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     name: string
     type: $Enums.CategoryType
+    defaultNeedTier: $Enums.ExpenseNeedTier | null
+    trackAnnualBudgetRemaining: boolean
+    planRebalanceEligible: boolean
+    planRebalancePriority: number | null
+    planMinimumAmount: runtime.Decimal
     isActive: boolean
     sortOrder: number | null
     createdAt: Date
@@ -1077,6 +1399,7 @@ export interface Prisma__CategoryClient<T, Null = never, ExtArgs extends runtime
   readonly [Symbol.toStringTag]: "PrismaPromise"
   monthlyEntries<T extends Prisma.Category$monthlyEntriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Category$monthlyEntriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MonthlyEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   budgetEntries<T extends Prisma.Category$budgetEntriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Category$budgetEntriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BudgetEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  expenseAllocations<T extends Prisma.Category$expenseAllocationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Category$expenseAllocationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ExpenseAllocationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1109,6 +1432,11 @@ export interface CategoryFieldRefs {
   readonly id: Prisma.FieldRef<"Category", 'Int'>
   readonly name: Prisma.FieldRef<"Category", 'String'>
   readonly type: Prisma.FieldRef<"Category", 'CategoryType'>
+  readonly defaultNeedTier: Prisma.FieldRef<"Category", 'ExpenseNeedTier'>
+  readonly trackAnnualBudgetRemaining: Prisma.FieldRef<"Category", 'Boolean'>
+  readonly planRebalanceEligible: Prisma.FieldRef<"Category", 'Boolean'>
+  readonly planRebalancePriority: Prisma.FieldRef<"Category", 'Int'>
+  readonly planMinimumAmount: Prisma.FieldRef<"Category", 'Decimal'>
   readonly isActive: Prisma.FieldRef<"Category", 'Boolean'>
   readonly sortOrder: Prisma.FieldRef<"Category", 'Int'>
   readonly createdAt: Prisma.FieldRef<"Category", 'DateTime'>
@@ -1544,6 +1872,30 @@ export type Category$budgetEntriesArgs<ExtArgs extends runtime.Types.Extensions.
   take?: number
   skip?: number
   distinct?: Prisma.BudgetEntryScalarFieldEnum | Prisma.BudgetEntryScalarFieldEnum[]
+}
+
+/**
+ * Category.expenseAllocations
+ */
+export type Category$expenseAllocationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ExpenseAllocation
+   */
+  select?: Prisma.ExpenseAllocationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ExpenseAllocation
+   */
+  omit?: Prisma.ExpenseAllocationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ExpenseAllocationInclude<ExtArgs> | null
+  where?: Prisma.ExpenseAllocationWhereInput
+  orderBy?: Prisma.ExpenseAllocationOrderByWithRelationInput | Prisma.ExpenseAllocationOrderByWithRelationInput[]
+  cursor?: Prisma.ExpenseAllocationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ExpenseAllocationScalarFieldEnum | Prisma.ExpenseAllocationScalarFieldEnum[]
 }
 
 /**

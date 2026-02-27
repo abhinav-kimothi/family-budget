@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
+import { usePathname } from "next/navigation";
 
 export function CollapsibleTableGroup({
   title,
@@ -13,7 +14,31 @@ export function CollapsibleTableGroup({
   colSpan?: number;
   children: React.ReactNode;
 }) {
+  const pathname = usePathname();
+  const storageKey = useMemo(
+    () => `collapsible-table-group:${pathname}:${title}`,
+    [pathname, title],
+  );
   const [open, setOpen] = useState(defaultOpen);
+
+  useEffect(() => {
+    try {
+      const raw = window.localStorage.getItem(storageKey);
+      if (raw === "1") setOpen(true);
+      else if (raw === "0") setOpen(false);
+      else setOpen(defaultOpen);
+    } catch {
+      setOpen(defaultOpen);
+    }
+  }, [defaultOpen, storageKey]);
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(storageKey, open ? "1" : "0");
+    } catch {
+      // no-op
+    }
+  }, [open, storageKey]);
 
   // Always render children so form inputs stay in the DOM when collapsed.
   // When collapsed, hide the rows visually so submitted form data includes all categories.

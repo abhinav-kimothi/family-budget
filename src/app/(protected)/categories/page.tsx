@@ -142,6 +142,32 @@ async function deleteCategory(formData: FormData) {
   revalidatePath("/dashboard");
 }
 
+async function setCategoryDefaultNeedTier(formData: FormData) {
+  "use server";
+
+  await requireAdmin();
+
+  const id = Number(formData.get("id"));
+  const defaultNeedTierRaw = String(formData.get("defaultNeedTier") || "").trim();
+  if (!id) return;
+
+  const defaultNeedTier =
+    defaultNeedTierRaw === "ESSENTIAL" ||
+    defaultNeedTierRaw === "NON_ESSENTIAL" ||
+    defaultNeedTierRaw === "TRAVEL" ||
+    defaultNeedTierRaw === "LUXURY"
+      ? defaultNeedTierRaw
+      : null;
+
+  await prisma.category.update({
+    where: { id },
+    data: { defaultNeedTier },
+  });
+
+  revalidatePath("/categories");
+  revalidatePath("/entries");
+}
+
 const TYPE_ORDER: ("INCOME" | "EXPENSE" | "INVESTMENT" | "OTHER")[] = [
   "INCOME",
   "EXPENSE",
@@ -234,6 +260,7 @@ export default async function CategoriesPage() {
             <tr>
               <th className="px-4 py-2 text-left">Name</th>
               <th className="px-4 py-2 text-left">Status</th>
+              <th className="px-4 py-2 text-left">Default tier</th>
               <th className="px-4 py-2" />
             </tr>
           </thead>
@@ -248,7 +275,7 @@ export default async function CategoriesPage() {
                 <CollapsibleTableGroup
                   key={type}
                   title={groupLabel}
-                  colSpan={3}
+                  colSpan={4}
                 >
                   {groupCategories.map((category) => (
                     <tr
@@ -267,6 +294,32 @@ export default async function CategoriesPage() {
                           <span className="rounded-full border border-slate-200 bg-slate-100 px-2 py-0.5 text-[10px] text-slate-800 dark:border-slate-600 dark:bg-slate-600 dark:text-slate-300">
                             Hidden
                           </span>
+                        )}
+                      </td>
+                      <td className="px-4 py-2 text-xs">
+                        {category.type === "EXPENSE" ? (
+                          <form action={setCategoryDefaultNeedTier} className="inline-flex items-center gap-2">
+                            <input type="hidden" name="id" value={category.id} />
+                            <select
+                              name="defaultNeedTier"
+                              defaultValue={category.defaultNeedTier ?? ""}
+                              className="rounded-lg border border-slate-200 bg-white px-2 py-1 text-[11px] text-slate-800 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-200"
+                            >
+                              <option value="">Essential (default)</option>
+                              <option value="ESSENTIAL">Essential</option>
+                              <option value="NON_ESSENTIAL">Non-essential</option>
+                              <option value="TRAVEL">Travel</option>
+                              <option value="LUXURY">Luxury</option>
+                            </select>
+                            <button
+                              type="submit"
+                              className="rounded-lg border border-slate-200 bg-white px-2 py-1 text-[11px] text-slate-800 transition hover:bg-slate-50 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-200 dark:hover:bg-slate-600"
+                            >
+                              Save
+                            </button>
+                          </form>
+                        ) : (
+                          <span className="text-slate-500 dark:text-slate-400">—</span>
                         )}
                       </td>
                       <td className="px-4 py-2 text-right">
@@ -318,4 +371,3 @@ export default async function CategoriesPage() {
     </div>
   );
 }
-

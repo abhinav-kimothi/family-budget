@@ -395,7 +395,8 @@ export const ModelName = {
   Category: 'Category',
   MonthlyEntry: 'MonthlyEntry',
   BudgetEntry: 'BudgetEntry',
-  Settings: 'Settings'
+  Settings: 'Settings',
+  ExpenseAllocation: 'ExpenseAllocation'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -411,7 +412,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "session" | "category" | "monthlyEntry" | "budgetEntry" | "settings"
+    modelProps: "user" | "session" | "category" | "monthlyEntry" | "budgetEntry" | "settings" | "expenseAllocation"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -859,6 +860,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ExpenseAllocation: {
+      payload: Prisma.$ExpenseAllocationPayload<ExtArgs>
+      fields: Prisma.ExpenseAllocationFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ExpenseAllocationFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExpenseAllocationPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ExpenseAllocationFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExpenseAllocationPayload>
+        }
+        findFirst: {
+          args: Prisma.ExpenseAllocationFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExpenseAllocationPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ExpenseAllocationFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExpenseAllocationPayload>
+        }
+        findMany: {
+          args: Prisma.ExpenseAllocationFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExpenseAllocationPayload>[]
+        }
+        create: {
+          args: Prisma.ExpenseAllocationCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExpenseAllocationPayload>
+        }
+        createMany: {
+          args: Prisma.ExpenseAllocationCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ExpenseAllocationCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExpenseAllocationPayload>[]
+        }
+        delete: {
+          args: Prisma.ExpenseAllocationDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExpenseAllocationPayload>
+        }
+        update: {
+          args: Prisma.ExpenseAllocationUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExpenseAllocationPayload>
+        }
+        deleteMany: {
+          args: Prisma.ExpenseAllocationDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ExpenseAllocationUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ExpenseAllocationUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExpenseAllocationPayload>[]
+        }
+        upsert: {
+          args: Prisma.ExpenseAllocationUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExpenseAllocationPayload>
+        }
+        aggregate: {
+          args: Prisma.ExpenseAllocationAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateExpenseAllocation>
+        }
+        groupBy: {
+          args: Prisma.ExpenseAllocationGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ExpenseAllocationGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ExpenseAllocationCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ExpenseAllocationCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -922,6 +997,11 @@ export const CategoryScalarFieldEnum = {
   id: 'id',
   name: 'name',
   type: 'type',
+  defaultNeedTier: 'defaultNeedTier',
+  trackAnnualBudgetRemaining: 'trackAnnualBudgetRemaining',
+  planRebalanceEligible: 'planRebalanceEligible',
+  planRebalancePriority: 'planRebalancePriority',
+  planMinimumAmount: 'planMinimumAmount',
   isActive: 'isActive',
   sortOrder: 'sortOrder',
   createdAt: 'createdAt',
@@ -950,6 +1030,7 @@ export const BudgetEntryScalarFieldEnum = {
   year: 'year',
   month: 'month',
   amount: 'amount',
+  rebalancedAmount: 'rebalancedAmount',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   categoryId: 'categoryId'
@@ -961,10 +1042,31 @@ export type BudgetEntryScalarFieldEnum = (typeof BudgetEntryScalarFieldEnum)[key
 export const SettingsScalarFieldEnum = {
   id: 'id',
   initialBalance: 'initialBalance',
+  openingInvestableBalance: 'openingInvestableBalance',
   currency: 'currency'
 } as const
 
 export type SettingsScalarFieldEnum = (typeof SettingsScalarFieldEnum)[keyof typeof SettingsScalarFieldEnum]
+
+
+export const ExpenseAllocationScalarFieldEnum = {
+  id: 'id',
+  year: 'year',
+  month: 'month',
+  amount: 'amount',
+  type: 'type',
+  durationMonths: 'durationMonths',
+  startMode: 'startMode',
+  recognitionStartYear: 'recognitionStartYear',
+  recognitionStartMonth: 'recognitionStartMonth',
+  needTier: 'needTier',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  categoryId: 'categoryId'
+} as const
+
+export type ExpenseAllocationScalarFieldEnum = (typeof ExpenseAllocationScalarFieldEnum)[keyof typeof ExpenseAllocationScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1025,6 +1127,13 @@ export type EnumCategoryTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$Pri
 
 
 /**
+ * Reference to a field of type 'ExpenseNeedTier'
+ */
+export type EnumExpenseNeedTierFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ExpenseNeedTier'>
+    
+
+
+/**
  * Reference to a field of type 'Boolean'
  */
 export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
@@ -1035,6 +1144,20 @@ export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
  * Reference to a field of type 'Decimal'
  */
 export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
+    
+
+
+/**
+ * Reference to a field of type 'ExpenseAllocationType'
+ */
+export type EnumExpenseAllocationTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ExpenseAllocationType'>
+    
+
+
+/**
+ * Reference to a field of type 'AllocationStartMode'
+ */
+export type EnumAllocationStartModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AllocationStartMode'>
     
 
 
@@ -1137,6 +1260,7 @@ export type GlobalOmitConfig = {
   monthlyEntry?: Prisma.MonthlyEntryOmit
   budgetEntry?: Prisma.BudgetEntryOmit
   settings?: Prisma.SettingsOmit
+  expenseAllocation?: Prisma.ExpenseAllocationOmit
 }
 
 /* Types for Logging */

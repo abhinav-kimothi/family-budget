@@ -3,18 +3,26 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --webpack",
     "build": "prisma generate && next build",
     "start": "prisma migrate deploy && next start",
     "start:lan": "next start --hostname 0.0.0.0",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "lint": "eslint",
     "postinstall": "prisma generate"
   },
   "dependencies": {
     "@prisma/client": "^6.19.2",
     "bcryptjs": "^3.0.3",
+    "exceljs": "^4.4.0",
     "framer-motion": "^12.34.1",
+    "html2pdf.js": "^0.14.0",
+    "jspdf": "^4.2.0",
+    "jspdf-autotable": "^5.0.7",
+    "lucide-react": "^0.575.0",
     "next": "16.1.6",
+    "playwright-core": "^1.58.2",
     "prisma": "^6.19.2",
     "react": "19.2.3",
     "react-dom": "19.2.3",
@@ -29,6 +37,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^3.2.4"
   }
 }

@@ -54,7 +54,8 @@ export const ModelName = {
   Category: 'Category',
   MonthlyEntry: 'MonthlyEntry',
   BudgetEntry: 'BudgetEntry',
-  Settings: 'Settings'
+  Settings: 'Settings',
+  ExpenseAllocation: 'ExpenseAllocation'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -97,6 +98,11 @@ export const CategoryScalarFieldEnum = {
   id: 'id',
   name: 'name',
   type: 'type',
+  defaultNeedTier: 'defaultNeedTier',
+  trackAnnualBudgetRemaining: 'trackAnnualBudgetRemaining',
+  planRebalanceEligible: 'planRebalanceEligible',
+  planRebalancePriority: 'planRebalancePriority',
+  planMinimumAmount: 'planMinimumAmount',
   isActive: 'isActive',
   sortOrder: 'sortOrder',
   createdAt: 'createdAt',
@@ -125,6 +131,7 @@ export const BudgetEntryScalarFieldEnum = {
   year: 'year',
   month: 'month',
   amount: 'amount',
+  rebalancedAmount: 'rebalancedAmount',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   categoryId: 'categoryId'
@@ -136,10 +143,31 @@ export type BudgetEntryScalarFieldEnum = (typeof BudgetEntryScalarFieldEnum)[key
 export const SettingsScalarFieldEnum = {
   id: 'id',
   initialBalance: 'initialBalance',
+  openingInvestableBalance: 'openingInvestableBalance',
   currency: 'currency'
 } as const
 
 export type SettingsScalarFieldEnum = (typeof SettingsScalarFieldEnum)[keyof typeof SettingsScalarFieldEnum]
+
+
+export const ExpenseAllocationScalarFieldEnum = {
+  id: 'id',
+  year: 'year',
+  month: 'month',
+  amount: 'amount',
+  type: 'type',
+  durationMonths: 'durationMonths',
+  startMode: 'startMode',
+  recognitionStartYear: 'recognitionStartYear',
+  recognitionStartMonth: 'recognitionStartMonth',
+  needTier: 'needTier',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  categoryId: 'categoryId'
+} as const
+
+export type ExpenseAllocationScalarFieldEnum = (typeof ExpenseAllocationScalarFieldEnum)[keyof typeof ExpenseAllocationScalarFieldEnum]
 
 
 export const SortOrder = {

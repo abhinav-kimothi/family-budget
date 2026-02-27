@@ -2,13 +2,20 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 
-export function YearSelector({ currentYear }: { currentYear: number }) {
+export function YearSelector({
+  currentYear,
+  minYear,
+  maxYear,
+}: {
+  currentYear: number;
+  minYear: number;
+  maxYear: number;
+}) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
   const years = [];
-  const thisYear = new Date().getFullYear();
-  for (let y = thisYear - 5; y <= thisYear + 1; y++) {
+  for (let y = minYear; y <= maxYear; y++) {
     years.push(y);
   }
 

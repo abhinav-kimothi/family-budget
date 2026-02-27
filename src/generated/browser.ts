@@ -47,3 +47,8 @@ export type BudgetEntry = Prisma.BudgetEntryModel
  * 
  */
 export type Settings = Prisma.SettingsModel
+/**
+ * Model ExpenseAllocation
+ * 
+ */
+export type ExpenseAllocation = Prisma.ExpenseAllocationModel

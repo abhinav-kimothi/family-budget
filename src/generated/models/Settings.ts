@@ -29,28 +29,33 @@ export type AggregateSettings = {
 export type SettingsAvgAggregateOutputType = {
   id: number | null
   initialBalance: runtime.Decimal | null
+  openingInvestableBalance: runtime.Decimal | null
 }
 
 export type SettingsSumAggregateOutputType = {
   id: number | null
   initialBalance: runtime.Decimal | null
+  openingInvestableBalance: runtime.Decimal | null
 }
 
 export type SettingsMinAggregateOutputType = {
   id: number | null
   initialBalance: runtime.Decimal | null
+  openingInvestableBalance: runtime.Decimal | null
   currency: string | null
 }
 
 export type SettingsMaxAggregateOutputType = {
   id: number | null
   initialBalance: runtime.Decimal | null
+  openingInvestableBalance: runtime.Decimal | null
   currency: string | null
 }
 
 export type SettingsCountAggregateOutputType = {
   id: number
   initialBalance: number
+  openingInvestableBalance: number
   currency: number
   _all: number
 }
@@ -59,28 +64,33 @@ export type SettingsCountAggregateOutputType = {
 export type SettingsAvgAggregateInputType = {
   id?: true
   initialBalance?: true
+  openingInvestableBalance?: true
 }
 
 export type SettingsSumAggregateInputType = {
   id?: true
   initialBalance?: true
+  openingInvestableBalance?: true
 }
 
 export type SettingsMinAggregateInputType = {
   id?: true
   initialBalance?: true
+  openingInvestableBalance?: true
   currency?: true
 }
 
 export type SettingsMaxAggregateInputType = {
   id?: true
   initialBalance?: true
+  openingInvestableBalance?: true
   currency?: true
 }
 
 export type SettingsCountAggregateInputType = {
   id?: true
   initialBalance?: true
+  openingInvestableBalance?: true
   currency?: true
   _all?: true
 }
@@ -174,6 +184,7 @@ export type SettingsGroupByArgs<ExtArgs extends runtime.Types.Extensions.Interna
 export type SettingsGroupByOutputType = {
   id: number
   initialBalance: runtime.Decimal
+  openingInvestableBalance: runtime.Decimal
   currency: string
   _count: SettingsCountAggregateOutputType | null
   _avg: SettingsAvgAggregateOutputType | null
@@ -203,12 +214,14 @@ export type SettingsWhereInput = {
   NOT?: Prisma.SettingsWhereInput | Prisma.SettingsWhereInput[]
   id?: Prisma.IntFilter<"Settings"> | number
   initialBalance?: Prisma.DecimalFilter<"Settings"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  openingInvestableBalance?: Prisma.DecimalFilter<"Settings"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFilter<"Settings"> | string
 }
 
 export type SettingsOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   initialBalance?: Prisma.SortOrder
+  openingInvestableBalance?: Prisma.SortOrder
   currency?: Prisma.SortOrder
 }
 
@@ -218,12 +231,14 @@ export type SettingsWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.SettingsWhereInput[]
   NOT?: Prisma.SettingsWhereInput | Prisma.SettingsWhereInput[]
   initialBalance?: Prisma.DecimalFilter<"Settings"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  openingInvestableBalance?: Prisma.DecimalFilter<"Settings"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFilter<"Settings"> | string
 }, "id">
 
 export type SettingsOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   initialBalance?: Prisma.SortOrder
+  openingInvestableBalance?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   _count?: Prisma.SettingsCountOrderByAggregateInput
   _avg?: Prisma.SettingsAvgOrderByAggregateInput
@@ -238,77 +253,90 @@ export type SettingsScalarWhereWithAggregatesInput = {
   NOT?: Prisma.SettingsScalarWhereWithAggregatesInput | Prisma.SettingsScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Settings"> | number
   initialBalance?: Prisma.DecimalWithAggregatesFilter<"Settings"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  openingInvestableBalance?: Prisma.DecimalWithAggregatesFilter<"Settings"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringWithAggregatesFilter<"Settings"> | string
 }
 
 export type SettingsCreateInput = {
   id?: number
   initialBalance?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  openingInvestableBalance?: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
 }
 
 export type SettingsUncheckedCreateInput = {
   id?: number
   initialBalance?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  openingInvestableBalance?: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
 }
 
 export type SettingsUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   initialBalance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  openingInvestableBalance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type SettingsUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   initialBalance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  openingInvestableBalance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type SettingsCreateManyInput = {
   id?: number
   initialBalance?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  openingInvestableBalance?: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
 }
 
 export type SettingsUpdateManyMutationInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   initialBalance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  openingInvestableBalance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type SettingsUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   initialBalance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  openingInvestableBalance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type SettingsCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   initialBalance?: Prisma.SortOrder
+  openingInvestableBalance?: Prisma.SortOrder
   currency?: Prisma.SortOrder
 }
 
 export type SettingsAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   initialBalance?: Prisma.SortOrder
+  openingInvestableBalance?: Prisma.SortOrder
 }
 
 export type SettingsMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   initialBalance?: Prisma.SortOrder
+  openingInvestableBalance?: Prisma.SortOrder
   currency?: Prisma.SortOrder
 }
 
 export type SettingsMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   initialBalance?: Prisma.SortOrder
+  openingInvestableBalance?: Prisma.SortOrder
   currency?: Prisma.SortOrder
 }
 
 export type SettingsSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   initialBalance?: Prisma.SortOrder
+  openingInvestableBalance?: Prisma.SortOrder
 }
 
 
@@ -316,28 +344,32 @@ export type SettingsSumOrderByAggregateInput = {
 export type SettingsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   initialBalance?: boolean
+  openingInvestableBalance?: boolean
   currency?: boolean
 }, ExtArgs["result"]["settings"]>
 
 export type SettingsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   initialBalance?: boolean
+  openingInvestableBalance?: boolean
   currency?: boolean
 }, ExtArgs["result"]["settings"]>
 
 export type SettingsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   initialBalance?: boolean
+  openingInvestableBalance?: boolean
   currency?: boolean
 }, ExtArgs["result"]["settings"]>
 
 export type SettingsSelectScalar = {
   id?: boolean
   initialBalance?: boolean
+  openingInvestableBalance?: boolean
   currency?: boolean
 }
 
-export type SettingsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "initialBalance" | "currency", ExtArgs["result"]["settings"]>
+export type SettingsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "initialBalance" | "openingInvestableBalance" | "currency", ExtArgs["result"]["settings"]>
 
 export type $SettingsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Settings"
@@ -345,6 +377,7 @@ export type $SettingsPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     initialBalance: runtime.Decimal
+    openingInvestableBalance: runtime.Decimal
     currency: string
   }, ExtArgs["result"]["settings"]>
   composites: {}
@@ -771,6 +804,7 @@ export interface Prisma__SettingsClient<T, Null = never, ExtArgs extends runtime
 export interface SettingsFieldRefs {
   readonly id: Prisma.FieldRef<"Settings", 'Int'>
   readonly initialBalance: Prisma.FieldRef<"Settings", 'Decimal'>
+  readonly openingInvestableBalance: Prisma.FieldRef<"Settings", 'Decimal'>
   readonly currency: Prisma.FieldRef<"Settings", 'String'>
 }
     

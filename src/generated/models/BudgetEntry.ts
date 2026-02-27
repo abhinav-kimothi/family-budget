@@ -31,6 +31,7 @@ export type BudgetEntryAvgAggregateOutputType = {
   year: number | null
   month: number | null
   amount: runtime.Decimal | null
+  rebalancedAmount: runtime.Decimal | null
   categoryId: number | null
 }
 
@@ -39,6 +40,7 @@ export type BudgetEntrySumAggregateOutputType = {
   year: number | null
   month: number | null
   amount: runtime.Decimal | null
+  rebalancedAmount: runtime.Decimal | null
   categoryId: number | null
 }
 
@@ -47,6 +49,7 @@ export type BudgetEntryMinAggregateOutputType = {
   year: number | null
   month: number | null
   amount: runtime.Decimal | null
+  rebalancedAmount: runtime.Decimal | null
   createdAt: Date | null
   updatedAt: Date | null
   categoryId: number | null
@@ -57,6 +60,7 @@ export type BudgetEntryMaxAggregateOutputType = {
   year: number | null
   month: number | null
   amount: runtime.Decimal | null
+  rebalancedAmount: runtime.Decimal | null
   createdAt: Date | null
   updatedAt: Date | null
   categoryId: number | null
@@ -67,6 +71,7 @@ export type BudgetEntryCountAggregateOutputType = {
   year: number
   month: number
   amount: number
+  rebalancedAmount: number
   createdAt: number
   updatedAt: number
   categoryId: number
@@ -79,6 +84,7 @@ export type BudgetEntryAvgAggregateInputType = {
   year?: true
   month?: true
   amount?: true
+  rebalancedAmount?: true
   categoryId?: true
 }
 
@@ -87,6 +93,7 @@ export type BudgetEntrySumAggregateInputType = {
   year?: true
   month?: true
   amount?: true
+  rebalancedAmount?: true
   categoryId?: true
 }
 
@@ -95,6 +102,7 @@ export type BudgetEntryMinAggregateInputType = {
   year?: true
   month?: true
   amount?: true
+  rebalancedAmount?: true
   createdAt?: true
   updatedAt?: true
   categoryId?: true
@@ -105,6 +113,7 @@ export type BudgetEntryMaxAggregateInputType = {
   year?: true
   month?: true
   amount?: true
+  rebalancedAmount?: true
   createdAt?: true
   updatedAt?: true
   categoryId?: true
@@ -115,6 +124,7 @@ export type BudgetEntryCountAggregateInputType = {
   year?: true
   month?: true
   amount?: true
+  rebalancedAmount?: true
   createdAt?: true
   updatedAt?: true
   categoryId?: true
@@ -212,6 +222,7 @@ export type BudgetEntryGroupByOutputType = {
   year: number
   month: number
   amount: runtime.Decimal
+  rebalancedAmount: runtime.Decimal | null
   createdAt: Date
   updatedAt: Date
   categoryId: number
@@ -245,6 +256,7 @@ export type BudgetEntryWhereInput = {
   year?: Prisma.IntFilter<"BudgetEntry"> | number
   month?: Prisma.IntFilter<"BudgetEntry"> | number
   amount?: Prisma.DecimalFilter<"BudgetEntry"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  rebalancedAmount?: Prisma.DecimalNullableFilter<"BudgetEntry"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFilter<"BudgetEntry"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"BudgetEntry"> | Date | string
   categoryId?: Prisma.IntFilter<"BudgetEntry"> | number
@@ -256,6 +268,7 @@ export type BudgetEntryOrderByWithRelationInput = {
   year?: Prisma.SortOrder
   month?: Prisma.SortOrder
   amount?: Prisma.SortOrder
+  rebalancedAmount?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
@@ -271,6 +284,7 @@ export type BudgetEntryWhereUniqueInput = Prisma.AtLeast<{
   year?: Prisma.IntFilter<"BudgetEntry"> | number
   month?: Prisma.IntFilter<"BudgetEntry"> | number
   amount?: Prisma.DecimalFilter<"BudgetEntry"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  rebalancedAmount?: Prisma.DecimalNullableFilter<"BudgetEntry"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFilter<"BudgetEntry"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"BudgetEntry"> | Date | string
   categoryId?: Prisma.IntFilter<"BudgetEntry"> | number
@@ -282,6 +296,7 @@ export type BudgetEntryOrderByWithAggregationInput = {
   year?: Prisma.SortOrder
   month?: Prisma.SortOrder
   amount?: Prisma.SortOrder
+  rebalancedAmount?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
@@ -300,6 +315,7 @@ export type BudgetEntryScalarWhereWithAggregatesInput = {
   year?: Prisma.IntWithAggregatesFilter<"BudgetEntry"> | number
   month?: Prisma.IntWithAggregatesFilter<"BudgetEntry"> | number
   amount?: Prisma.DecimalWithAggregatesFilter<"BudgetEntry"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  rebalancedAmount?: Prisma.DecimalNullableWithAggregatesFilter<"BudgetEntry"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"BudgetEntry"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"BudgetEntry"> | Date | string
   categoryId?: Prisma.IntWithAggregatesFilter<"BudgetEntry"> | number
@@ -309,6 +325,7 @@ export type BudgetEntryCreateInput = {
   year: number
   month: number
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  rebalancedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   category: Prisma.CategoryCreateNestedOneWithoutBudgetEntriesInput
@@ -319,6 +336,7 @@ export type BudgetEntryUncheckedCreateInput = {
   year: number
   month: number
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  rebalancedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   categoryId: number
@@ -328,6 +346,7 @@ export type BudgetEntryUpdateInput = {
   year?: Prisma.IntFieldUpdateOperationsInput | number
   month?: Prisma.IntFieldUpdateOperationsInput | number
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  rebalancedAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   category?: Prisma.CategoryUpdateOneRequiredWithoutBudgetEntriesNestedInput
@@ -338,6 +357,7 @@ export type BudgetEntryUncheckedUpdateInput = {
   year?: Prisma.IntFieldUpdateOperationsInput | number
   month?: Prisma.IntFieldUpdateOperationsInput | number
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  rebalancedAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   categoryId?: Prisma.IntFieldUpdateOperationsInput | number
@@ -348,6 +368,7 @@ export type BudgetEntryCreateManyInput = {
   year: number
   month: number
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  rebalancedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   categoryId: number
@@ -357,6 +378,7 @@ export type BudgetEntryUpdateManyMutationInput = {
   year?: Prisma.IntFieldUpdateOperationsInput | number
   month?: Prisma.IntFieldUpdateOperationsInput | number
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  rebalancedAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -366,6 +388,7 @@ export type BudgetEntryUncheckedUpdateManyInput = {
   year?: Prisma.IntFieldUpdateOperationsInput | number
   month?: Prisma.IntFieldUpdateOperationsInput | number
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  rebalancedAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   categoryId?: Prisma.IntFieldUpdateOperationsInput | number
@@ -392,6 +415,7 @@ export type BudgetEntryCountOrderByAggregateInput = {
   year?: Prisma.SortOrder
   month?: Prisma.SortOrder
   amount?: Prisma.SortOrder
+  rebalancedAmount?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
@@ -402,6 +426,7 @@ export type BudgetEntryAvgOrderByAggregateInput = {
   year?: Prisma.SortOrder
   month?: Prisma.SortOrder
   amount?: Prisma.SortOrder
+  rebalancedAmount?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
 }
 
@@ -410,6 +435,7 @@ export type BudgetEntryMaxOrderByAggregateInput = {
   year?: Prisma.SortOrder
   month?: Prisma.SortOrder
   amount?: Prisma.SortOrder
+  rebalancedAmount?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
@@ -420,6 +446,7 @@ export type BudgetEntryMinOrderByAggregateInput = {
   year?: Prisma.SortOrder
   month?: Prisma.SortOrder
   amount?: Prisma.SortOrder
+  rebalancedAmount?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
@@ -430,6 +457,7 @@ export type BudgetEntrySumOrderByAggregateInput = {
   year?: Prisma.SortOrder
   month?: Prisma.SortOrder
   amount?: Prisma.SortOrder
+  rebalancedAmount?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
 }
 
@@ -475,10 +503,19 @@ export type BudgetEntryUncheckedUpdateManyWithoutCategoryNestedInput = {
   deleteMany?: Prisma.BudgetEntryScalarWhereInput | Prisma.BudgetEntryScalarWhereInput[]
 }
 
+export type NullableDecimalFieldUpdateOperationsInput = {
+  set?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
+}
+
 export type BudgetEntryCreateWithoutCategoryInput = {
   year: number
   month: number
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  rebalancedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -488,6 +525,7 @@ export type BudgetEntryUncheckedCreateWithoutCategoryInput = {
   year: number
   month: number
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  rebalancedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -525,6 +563,7 @@ export type BudgetEntryScalarWhereInput = {
   year?: Prisma.IntFilter<"BudgetEntry"> | number
   month?: Prisma.IntFilter<"BudgetEntry"> | number
   amount?: Prisma.DecimalFilter<"BudgetEntry"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  rebalancedAmount?: Prisma.DecimalNullableFilter<"BudgetEntry"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFilter<"BudgetEntry"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"BudgetEntry"> | Date | string
   categoryId?: Prisma.IntFilter<"BudgetEntry"> | number
@@ -535,6 +574,7 @@ export type BudgetEntryCreateManyCategoryInput = {
   year: number
   month: number
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  rebalancedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -543,6 +583,7 @@ export type BudgetEntryUpdateWithoutCategoryInput = {
   year?: Prisma.IntFieldUpdateOperationsInput | number
   month?: Prisma.IntFieldUpdateOperationsInput | number
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  rebalancedAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -552,6 +593,7 @@ export type BudgetEntryUncheckedUpdateWithoutCategoryInput = {
   year?: Prisma.IntFieldUpdateOperationsInput | number
   month?: Prisma.IntFieldUpdateOperationsInput | number
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  rebalancedAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -561,6 +603,7 @@ export type BudgetEntryUncheckedUpdateManyWithoutCategoryInput = {
   year?: Prisma.IntFieldUpdateOperationsInput | number
   month?: Prisma.IntFieldUpdateOperationsInput | number
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  rebalancedAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -572,6 +615,7 @@ export type BudgetEntrySelect<ExtArgs extends runtime.Types.Extensions.InternalA
   year?: boolean
   month?: boolean
   amount?: boolean
+  rebalancedAmount?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   categoryId?: boolean
@@ -583,6 +627,7 @@ export type BudgetEntrySelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   year?: boolean
   month?: boolean
   amount?: boolean
+  rebalancedAmount?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   categoryId?: boolean
@@ -594,6 +639,7 @@ export type BudgetEntrySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   year?: boolean
   month?: boolean
   amount?: boolean
+  rebalancedAmount?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   categoryId?: boolean
@@ -605,12 +651,13 @@ export type BudgetEntrySelectScalar = {
   year?: boolean
   month?: boolean
   amount?: boolean
+  rebalancedAmount?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   categoryId?: boolean
 }
 
-export type BudgetEntryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "year" | "month" | "amount" | "createdAt" | "updatedAt" | "categoryId", ExtArgs["result"]["budgetEntry"]>
+export type BudgetEntryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "year" | "month" | "amount" | "rebalancedAmount" | "createdAt" | "updatedAt" | "categoryId", ExtArgs["result"]["budgetEntry"]>
 export type BudgetEntryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
 }
@@ -631,6 +678,7 @@ export type $BudgetEntryPayload<ExtArgs extends runtime.Types.Extensions.Interna
     year: number
     month: number
     amount: runtime.Decimal
+    rebalancedAmount: runtime.Decimal | null
     createdAt: Date
     updatedAt: Date
     categoryId: number
@@ -1062,6 +1110,7 @@ export interface BudgetEntryFieldRefs {
   readonly year: Prisma.FieldRef<"BudgetEntry", 'Int'>
   readonly month: Prisma.FieldRef<"BudgetEntry", 'Int'>
   readonly amount: Prisma.FieldRef<"BudgetEntry", 'Decimal'>
+  readonly rebalancedAmount: Prisma.FieldRef<"BudgetEntry", 'Decimal'>
   readonly createdAt: Prisma.FieldRef<"BudgetEntry", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"BudgetEntry", 'DateTime'>
   readonly categoryId: Prisma.FieldRef<"BudgetEntry", 'Int'>

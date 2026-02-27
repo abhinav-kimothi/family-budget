@@ -16,14 +16,20 @@ export function DashboardPeriodSelector({
   month,
   monthFrom,
   monthTo,
-  hideEmpty,
+  minYear,
+  minMonthForYear,
+  maxYear,
+  maxMonthForYear,
 }: {
   year: number;
   view: ViewType;
   month: number;
   monthFrom: number;
   monthTo: number;
-  hideEmpty: boolean;
+  minYear: number;
+  minMonthForYear: number;
+  maxYear: number;
+  maxMonthForYear: number;
 }) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -38,12 +44,13 @@ export function DashboardPeriodSelector({
     router.push(`/dashboard?${params.toString()}`);
   };
 
-  const hideEmptyToggleUrl = (() => {
-    const params = new URLSearchParams(searchParams.toString());
-    if (hideEmpty) params.delete("hideEmpty");
-    else params.set("hideEmpty", "1");
-    return `/dashboard?${params.toString()}`;
-  })();
+  const monthOptions = Array.from({ length: 12 }, (_, i) => i + 1).filter(
+    (m) => {
+      if (year === minYear && m < minMonthForYear) return false;
+      if (year === maxYear && m > maxMonthForYear) return false;
+      return true;
+    },
+  );
 
   return (
     <div className="flex flex-wrap items-center gap-3 text-xs">
@@ -67,7 +74,7 @@ export function DashboardPeriodSelector({
 className="rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-slate-900 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100"
         onChange={(e) => update({ month: e.target.value })}
       >
-          {Array.from({ length: 12 }, (_, i) => i + 1).map((m) => (
+          {monthOptions.map((m) => (
             <option key={m} value={m}>
               {monthLabel(m)}
             </option>
@@ -81,7 +88,7 @@ className="rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-slate-
           className="rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-slate-900 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100"
           onChange={(e) => update({ month: e.target.value })}
         >
-          {Array.from({ length: 12 }, (_, i) => i + 1).map((m) => (
+          {monthOptions.map((m) => (
             <option key={m} value={m}>
               Jan – {monthLabel(m)}
             </option>
@@ -96,7 +103,7 @@ className="rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-slate-
             className="rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-slate-900 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100"
             onChange={(e) => update({ monthFrom: e.target.value })}
           >
-            {Array.from({ length: 12 }, (_, i) => i + 1).map((m) => (
+            {monthOptions.map((m) => (
               <option key={m} value={m}>
                 {monthLabel(m)}
               </option>
@@ -108,7 +115,7 @@ className="rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-slate-
             className="rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-slate-900 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100"
             onChange={(e) => update({ monthTo: e.target.value })}
           >
-            {Array.from({ length: 12 }, (_, i) => i + 1).map((m) => (
+            {monthOptions.map((m) => (
               <option key={m} value={m}>
                 {monthLabel(m)}
               </option>
@@ -116,20 +123,6 @@ className="rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-slate-
           </select>
         </>
       )}
-
-      <a
-        href={hideEmptyToggleUrl}
-        className="ml-2 flex items-center gap-1.5 text-slate-800 transition hover:text-slate-900 dark:text-slate-300 dark:hover:text-slate-100"
-      >
-        <span
-          className={`inline-block h-3 w-3 rounded border border-slate-300 dark:border-slate-600 ${
-            hideEmpty ? "bg-[#00e676]" : "bg-slate-100 dark:bg-slate-600"
-          }`}
-        />
-        <span>
-          {hideEmpty ? "Show all categories" : "Hide categories with no actuals"}
-        </span>
-      </a>
     </div>
   );
 }

@@ -5,6 +5,8 @@
 
 /* Light theme (default) */
 :root {
+  --font-geist-sans: "Segoe UI", "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
+  --font-geist-mono: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --background: #fafafa;
   --foreground: #171717;
   --card-bg: #ffffff;
