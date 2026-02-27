@@ -1,0 +1,11 @@
+{
+  "$schema": "https://schema.railpack.com",
+  "buildAptPackages": ["libatomic1", "chromium"],
+  "deploy": {
+    "aptPackages": ["libatomic1", "chromium"],
+    "variables": {
+      "CHROME_EXECUTABLE_PATH": "/usr/bin/chromium"
+    }
+  }
+}
+
